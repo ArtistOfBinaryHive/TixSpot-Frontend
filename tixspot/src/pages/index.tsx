@@ -30,17 +30,20 @@ export default function IndexPage() {
           <Image
             src={assets.section1}
             alt=""
-            width={450}
-            height={450}
+            width={400}
+            height={400}
             className="rounded-lg"
             objectFit="cover"
           />
         </div>
       </div>
       {/* image section */}
-      <div className="container flex-grow overflow-x-auto">
+      <div className="overflow-hidden">
         <Section2 />
       </div>
+
+
+
       {/* <div className="flex gap-4">
         <Link
           href={siteConfig.links.docs}
