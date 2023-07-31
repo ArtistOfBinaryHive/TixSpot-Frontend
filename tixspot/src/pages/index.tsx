@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { assets } from './images'
 import Section2 from "@/components/section2/section2";
+import Event from "@/components/events/event";
 
 export default function IndexPage() {
   return (
@@ -40,6 +41,11 @@ export default function IndexPage() {
       {/* image section */}
       <div className="overflow-hidden">
         <Section2 />
+      </div>
+
+      {/* Event card sections */}
+      <div className="overflow-hidden">
+        <Event />
       </div>
 
 
