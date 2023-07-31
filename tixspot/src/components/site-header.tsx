@@ -8,6 +8,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { CommandMenu } from "./search/command-box"
 import { ListLinks } from "./list-links"
 import { ListSocials } from "./list-socials"
+import { RightNav } from "./nav/right-nav"
 
 export function SiteHeader() {
   return (
@@ -17,7 +18,7 @@ export function SiteHeader() {
         <div className="flex flex-1 items-center justify-end space-x-4"><CommandMenu/></div> 
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
-          <ListLinks items={siteConfig.rightNav} />
+          <RightNav items={siteConfig.rightNav} />
           <ListSocials items={siteConfig.links} />
             <ThemeToggle />
           </nav>
