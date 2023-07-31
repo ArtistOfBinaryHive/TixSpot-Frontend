@@ -15,11 +15,12 @@ const ImageCard: React.FC<Props> = ({ url, name, desc }) => {
                 width={150}
                 height={150}
                 alt=''
+                style={{ objectFit: "cover" }}
                 className='rounded-full'
-                objectFit='cover'
+            // objectFit='cover'
             />
             {/* image data */}
-            <div className='p-2 bg-gray-800 text-center rounded'>
+            <div className='p-2 text-center bg-gray-800 rounded'>
                 <p className='font-bold'>{name}</p>
                 <p>{desc}</p>
             </div>
