@@ -4,7 +4,7 @@ import { siteConfig } from "@/config/site";
 import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { assets } from './images'
+import { assets } from '@/components/images'
 import Section2 from "@/components/section2/section2";
 import Event from "@/components/events/event";
 
