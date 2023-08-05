@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import EventCard from './event-card'
 import { assets } from '@/pages/images'
+import getEvents from "../api-calls/events"
 
 const Event: React.FC = () => {
 
@@ -27,16 +28,25 @@ const Event: React.FC = () => {
         },
     ]
 
+const [Events, setEvents] = useState([])
+useEffect(() => {
+    const call=async () => {
+      const events= await getEvents()
+      console.log(events)
+      setEvents(JSON.parse(events))
+    }
+    call()
+  }, [])
     return (
         <div className='mt-5 overflow-hidden'>
             <div className='flex w-full gap-5 overflow-x-scroll justify-evenly '>
                 {
-                    fakeData && fakeData.map(({ title, image, description }: { title: string, image: string, description: string }, index: number) => {
+                    Events && Events.map(({ title, images, description }: { title: string, images:any, description: string }, index: number) => {
                         return (
                             <EventCard
                                 key={index}
                                 title={title}
-                                image={image}
+                                image={images['poster']}
                                 description={description}
                             />
                         )
