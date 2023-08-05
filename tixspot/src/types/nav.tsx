@@ -1,3 +1,4 @@
+import { Icon } from "@/components/icons"
 
 
 export interface NavItem {
@@ -13,7 +14,7 @@ export interface LinkItem {
   title: string
   href?: string
   customCSS?: string
-  icon: Icons
+  icon: Icon
   disabled?: boolean
   external?: boolean
 }
