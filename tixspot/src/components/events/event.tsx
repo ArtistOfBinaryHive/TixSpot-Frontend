@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import EventCard from './event-card'
-import { assets } from '@/pages/images'
+import { assets } from '@/components/images'
 import getEvents from "../api-calls/events"
 
 const Event: React.FC = () => {

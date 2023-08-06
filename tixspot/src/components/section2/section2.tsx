@@ -1,5 +1,5 @@
 import React from 'react'
-import { assets } from '@/pages/images'
+import { assets } from '@/components/images'
 import ImageCard from './image-card'
 
 const Section2: React.FC = () => {
