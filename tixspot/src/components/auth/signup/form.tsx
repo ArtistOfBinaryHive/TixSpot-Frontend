@@ -18,12 +18,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-
+import {register} from "@/components/api-calls/auth";
 interface SignupFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 const formSchema = z.object({
-  username: z.string().min(4, {
-    message: "Username must be at least 2 characters.",
-  }),
   email: z.string().email({
     message: "Please enter valid email address.",
   }),
@@ -38,9 +35,6 @@ export function SignupForm({ className, ...props }: SignupFormProps) {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-    },
   });
 
   // 2. Define a submit handler.
@@ -52,28 +46,23 @@ export function SignupForm({ className, ...props }: SignupFormProps) {
       setIsLoading(false);
     }, 1000);
     console.log(values);
+    const call=async (values: z.infer<typeof formSchema>) => {
+      const loginresponse= await register(values.email,values.password)
+      console.log(loginresponse)
+      if (loginresponse['access_token']) {
+        localStorage.setItem('access_token', loginresponse['access_token']);
+
+      }
+    }
+    call(values)
+
+    console.log(values);
   }
   return (
     <div className={cn("grid gap-6", className)}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-8">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  {/* <FormLabel>Username</FormLabel> */}
-                  <FormControl>
-                    <Input placeholder="Name" {...field} />
-                  </FormControl>
-                  {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               control={form.control}
               name="email"
