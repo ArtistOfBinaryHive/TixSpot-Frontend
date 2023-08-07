@@ -4,6 +4,7 @@ import { TypedUseSelectorHook, useSelector } from "react-redux"
 import authSlice from "./features/authSlice"
 
 export const store = configureStore({
+  // create a slice in features and add the reducers here
   reducer: {
     userAuthStatus: authSlice,
   },

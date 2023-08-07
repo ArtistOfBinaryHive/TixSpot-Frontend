@@ -26,7 +26,7 @@ const updateUser = () => {
                 userEmail: "check@gmail.com"
             }
         }))
-} catch {
+} catch(error) {
     console.log(error)
 }
 }
