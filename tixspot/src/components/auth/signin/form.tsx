@@ -18,7 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-
+import {login} from "@/components/api-calls/auth";
 interface SigninFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 const formSchema = z.object({
   email: z.string().email({
@@ -46,6 +46,19 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
+    
+
+    const call=async (values: z.infer<typeof formSchema>) => {
+      const loginresponse= await login(values.email,values.password)
+      console.log(loginresponse)
+      if (loginresponse['access_token']) {
+        localStorage.setItem('access_token', loginresponse['access_token']);
+
+      }
+      
+    }
+    call(values)
+
     console.log(values);
   }
   return (
