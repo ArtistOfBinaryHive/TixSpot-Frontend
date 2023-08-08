@@ -8,7 +8,37 @@ import { assets } from '@/components/images'
 import Section2 from "@/components/section2/section2";
 import Event from "@/components/events/event";
 
+
+// redux imports
+// import { useDispatch } from 'react-redux'
+// import { AppDispatch } from '@/redux/store'
+// import { useEffect } from "react";
+// import { setUser } from "@/redux/features/authSlice";
+
 export default function IndexPage() {
+
+  // sample redux usage
+
+  // const dispatch = useDispatch<AppDispatch>()
+  // const updateUser = () => {
+  //   try {
+  //     dispatch(setUser({
+  //       isAuthenticated: true,
+  //       userEmail: "email@gmail.com",
+  //       userName: "name"
+  //     }))
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   updateUser()
+  // }, [])
+
+
+
+
   return (
     <section className="container grid items-center gap-6 pt-6 pb-8 md:py-10">
       <div className="flex flex-col-reverse items-center justify-around md:flex-row lg:flex-row">
