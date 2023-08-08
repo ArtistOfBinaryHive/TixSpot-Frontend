@@ -20,6 +20,13 @@ import {
 import { useForm } from "react-hook-form";
 import {login} from "@/components/api-calls/auth";
 import getUserDetails from "@/components/api-calls/user-details"
+
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '@/redux/store'
+import { useEffect } from "react";
+import { setUser } from "@/redux/features/authSlice";
+
+
 interface SigninFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 const formSchema = z.object({
   email: z.string().email({
@@ -56,7 +63,19 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
         localStorage.setItem('access_token', loginresponse['access_token']);
         const userDetails=await getUserDetails(loginresponse['access_token'])
         console.log(userDetails)
-        // add userDetails to redux
+       // add userDetails to redux
+
+        const dispatch = useDispatch<AppDispatch>()
+
+        try {
+          dispatch(setUser(userDetails))
+        } catch (error) {
+          console.log(error)
+        }
+  
+
+
+
       }
       
     }
