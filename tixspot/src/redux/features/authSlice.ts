@@ -5,7 +5,7 @@ import { authType } from "../types/authTypes"
 
 // initial state
 const initialState: authType = {
-  userEmail: null,
+  email: null,
   userName: null,
   isAuthenticated: false,
 }
@@ -17,7 +17,7 @@ export const authSlice = createSlice({
   reducers: {
     setUser: (state: authType, action: PayloadAction<authType>) => {
       state.isAuthenticated = action.payload.isAuthenticated
-      state.userEmail = action.payload.userEmail
+      state.email = action.payload.email
       state.userName = action.payload.userName
     },
   },

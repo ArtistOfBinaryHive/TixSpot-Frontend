@@ -18,9 +18,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import {login} from "@/components/api-calls/auth";
+import { login } from "@/components/api-calls/auth";
 import getUserDetails from "@/components/api-calls/user-details"
-interface SigninFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '@/redux/store'
+import { useEffect } from "react";
+import { setUser } from "@/redux/features/authSlice";
+
+import { getUserData as getAuthData } from "@/redux/features/authSlice";
+import { authType } from "@/redux/types/authTypes";
+
+
+interface SigninFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 const formSchema = z.object({
   email: z.string().email({
     message: "Please enter valid email address.",
@@ -33,6 +43,11 @@ const formSchema = z.object({
 
 export function SigninForm({ className, ...props }: SigninFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  // dispatch to update the redux state
+  const dispatch = useDispatch<AppDispatch>()
+  // get the userdetails from the redux
+  const userDetails = useSelector(getAuthData)
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,23 +62,42 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-    
 
-    const call=async (values: z.infer<typeof formSchema>) => {
-      const loginresponse= await login(values.email,values.password)
+    // 3. Updates the global state of the user in redux
+    const updateUserAuthenticationStatus = (userDetails: authType) => {
+      try {
+        dispatch(setUser({...userDetails,isAuthenticated:true}))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+
+    const call = async (values: z.infer<typeof formSchema>) => {
+      const loginresponse = await login(values.email, values.password)
       console.log(loginresponse)
       if (loginresponse['access_token']) {
         localStorage.setItem('access_token', loginresponse['access_token']);
-        const userDetails=await getUserDetails(loginresponse['access_token'])
+        const userDetails = await getUserDetails(loginresponse['access_token'])
         console.log(userDetails)
         // add userDetails to redux
+        updateUserAuthenticationStatus(userDetails)
       }
-      
     }
     call(values)
-
     console.log(values);
   }
+
+
+  // log the updates (for reference)
+  useEffect(() => {
+    if (!userDetails.isAuthenticated) return
+    console.log(userDetails)
+  }, [userDetails])
+
+
+
+
   return (
     <div className={cn("grid gap-6", className)}>
       <Form {...form}>
@@ -104,7 +138,7 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
           </div>
           <Button disabled={isLoading} className="w-full mt-10">
             {isLoading && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
             )}
             Sign In with Email
           </Button>
@@ -115,7 +149,7 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
+          <span className="px-2 bg-background text-muted-foreground">
             Or continue with
           </span>
         </div>
@@ -130,9 +164,9 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
             className="w-full "
           >
             {isLoading ? (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
             ) : (
-              <Icons.gitHub className="mr-2 h-4 w-4" />
+              <Icons.gitHub className="w-4 h-4 mr-2" />
             )}
             Sign in with Gogle
           </Button>
@@ -145,9 +179,9 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
             className="w-full"
           >
             {isLoading ? (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
             ) : (
-              <Icons.gitHub className="mr-2 h-4 w-4" />
+              <Icons.gitHub className="w-4 h-4 mr-2" />
             )}
             Sign in with Apple ID
           </Button>
