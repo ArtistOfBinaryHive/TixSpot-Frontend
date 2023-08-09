@@ -66,7 +66,7 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
     // 3. Updates the global state of the user in redux
     const updateUserAuthenticationStatus = (userDetails: authType) => {
       try {
-        dispatch(setUser(userDetails))
+        dispatch(setUser({...userDetails,isAuthenticated:true}))
       } catch (error) {
         console.log(error)
       }

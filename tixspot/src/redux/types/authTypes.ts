@@ -1,5 +1,5 @@
-export interface authType{
-    userName:string|null,
-    userEmail:string|null,
-    isAuthenticated:Boolean
+export interface authType {
+  userName: string | null
+  email: string | null
+  isAuthenticated: Boolean
 }
