@@ -20,6 +20,7 @@ import {
 import { useForm } from "react-hook-form";
 import {login} from "@/components/api-calls/auth";
 import getUserDetails from "@/components/api-calls/user-details"
+import GoogleLogin from "../google";
 interface SigninFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 const formSchema = z.object({
   email: z.string().email({
@@ -128,14 +129,18 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
             type="button"
             disabled={isLoading}
             className="w-full "
+            // onClick={() => GoogleLogin()}
           >
             {isLoading ? (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             ) : (
               <Icons.gitHub className="mr-2 h-4 w-4" />
+             
             )}
-            Sign in with Gogle
+            
+            
           </Button>
+          <GoogleLogin/>
         </div>
         <div>
           <Button
