@@ -1,26 +1,28 @@
-"use client";
+"use client"
 
-import * as React from "react";
+import * as React from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
 
-import { cn } from "@/lib/utils";
-import { Icons } from "@/components/icons";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 import {
-  FormField,
   Form,
-  FormItem,
-  FormLabel,
   FormControl,
   FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import {login} from "@/components/api-calls/auth";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { login } from "@/components/api-calls/auth"
 import getUserDetails from "@/components/api-calls/user-details"
-import GoogleLogin from "../google";
+import { Icons } from "@/components/icons"
+
+import LoginWithGoogle from "../google"
+
 interface SigninFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 const formSchema = z.object({
   email: z.string().email({
@@ -30,40 +32,37 @@ const formSchema = z.object({
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long." }),
-});
+})
 
 export function SigninForm({ className, ...props }: SigninFormProps) {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false)
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-
-  });
+  })
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    setIsLoading(true);
+    setIsLoading(true)
     setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    
+      setIsLoading(false)
+    }, 1000)
 
-    const call=async (values: z.infer<typeof formSchema>) => {
-      const loginresponse= await login(values.email,values.password)
+    const call = async (values: z.infer<typeof formSchema>) => {
+      const loginresponse = await login(values.email, values.password)
       console.log(loginresponse)
-      if (loginresponse['access_token']) {
-        localStorage.setItem('access_token', loginresponse['access_token']);
-        const userDetails=await getUserDetails(loginresponse['access_token'])
+      if (loginresponse["access_token"]) {
+        localStorage.setItem("access_token", loginresponse["access_token"])
+        const userDetails = await getUserDetails(loginresponse["access_token"])
         console.log(userDetails)
         // add userDetails to redux
       }
-      
     }
     call(values)
 
-    console.log(values);
+    console.log(values)
   }
   return (
     <div className={cn("grid gap-6", className)}>
@@ -123,10 +122,8 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
       </div>
       {/* TODO: add apple and google icon */}
       <div className="w-full space-y-4">
-      
         <div>
-        <GoogleLogin isLoading={isLoading} setIsLoading={setIsLoading}/>
-          
+          <LoginWithGoogle isLoading={isLoading} setIsLoading={setIsLoading} />
         </div>
         <div>
           <Button
@@ -145,5 +142,5 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
         </div>
       </div>
     </div>
-  );
+  )
 }

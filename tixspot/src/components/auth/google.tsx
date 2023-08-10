@@ -1,45 +1,47 @@
-import React from 'react';
+import React from "react"
+import {
+  GoogleLogin,
+  GoogleOAuthProvider,
+  useGoogleLogin,
+} from "@react-oauth/google"
 
-import { useGoogleLogin } from '@react-oauth/google';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { Button } from '../ui/button';
-import { Icons } from "@/components/icons";
-function GoogleLogin({isLoading, setIsLoading}:any) {
-    console.log(isLoading)
-      return(<GoogleOAuthProvider clientId="249910114863-58vtiqb90mcm87h5vopi0b3c9v9nhfgl.apps.googleusercontent.com">
-              <div>
-          <Button
-            variant="secondary"
-            type="button"
-            disabled={isLoading}
-            className="w-full "
-            onClick={() => setIsLoading(!isLoading)}
-          >
-            {isLoading ? (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-             <Login setIsLoading={setIsLoading} />
-             
-            )}
-            Sign in with Google
-            
-          </Button>
-          
-        </div>
-      <Login/>
+import { Icons } from "@/components/icons"
 
-      </GoogleOAuthProvider>)
+import { Button } from "../ui/button"
+
+function LoginWithGoogle({ isLoading, setIsLoading }: any) {
+  console.log(isLoading)
+  return (
+    <GoogleOAuthProvider clientId="249910114863-58vtiqb90mcm87h5vopi0b3c9v9nhfgl.apps.googleusercontent.com">
+      <div className="w-96 flex items-center justify-center">
+        <GoogleLogin
+          onSuccess={(credentialResponse: any) => {
+            console.log(credentialResponse)
+          }}
+          onError={() => {
+            console.log("Login Failed")
+          }}
+          theme="outline"
+          type="standard"
+          shape="rectangular"
+          width={1}
+          logo_alignment="center"
+        />
+        {/* <p>a </p> */}
+      </div>
+    </GoogleOAuthProvider>
+  )
 }
-function Login({setIsLoading}:any) {
-    const login = useGoogleLogin({
-        onSuccess: tokenResponse => {
-            console.log(tokenResponse)
-            setIsLoading(setIsLoading(false))
-            //send token to backend to verify it
-        },
-      });
-      return(<div className="absolute h-full w-full " onClick={() => login()}>
-    </div>)
+function Login({ setIsLoading }: any) {
+  // const login = useGoogleLogin({
+  //   onSuccess: (tokenResponse) => {
+  //     console.log(tokenResponse)
+  //     setIsLoading(setIsLoading(false))
+  //     //send token to backend to verify it
+  //   },
+  //   flow: "auth-code",
+  // })
+  return <div></div>
 }
 
-export default GoogleLogin;
+export default LoginWithGoogle
