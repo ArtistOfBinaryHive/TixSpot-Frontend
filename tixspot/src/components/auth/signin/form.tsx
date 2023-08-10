@@ -149,20 +149,7 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
       {/* TODO: add apple and google icon */}
       <div className="w-full space-y-4">
         <div>
-          <Button
-            variant="secondary"
-            type="button"
-            disabled={isLoading}
-            className="w-full "
-            // onClick={() => GoogleLogin()}
-          >
-            {isLoading ? (
-              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
-            ) : (
-              <Icons.gitHub className="mr-2 h-4 w-4" />
-            )}
-          </Button>
-          <GoogleLogin />
+          <GoogleLogin isLoading={isLoading} setIsLoading={setIsLoading} />
         </div>
         <div>
           <Button
