@@ -26,7 +26,7 @@ import { login } from "@/components/api-calls/auth"
 import getUserDetails from "@/components/api-calls/user-details"
 import { Icons } from "@/components/icons"
 
-import GoogleLogin from "../google"
+import LoginWithGoogle from "../google"
 
 interface SigninFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 const formSchema = z.object({
@@ -81,6 +81,7 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
       }
     }
     call(values)
+
     console.log(values)
   }
 
@@ -149,7 +150,7 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
       {/* TODO: add apple and google icon */}
       <div className="w-full space-y-4">
         <div>
-          <GoogleLogin isLoading={isLoading} setIsLoading={setIsLoading} />
+          <LoginWithGoogle isLoading={isLoading} setIsLoading={setIsLoading} />
         </div>
         <div>
           <Button
