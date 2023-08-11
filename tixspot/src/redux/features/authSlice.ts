@@ -7,6 +7,7 @@ import { authType } from "../types/authTypes"
 const initialState: authType = {
   email: null,
   userName: null,
+  accessToken: null,
   isAuthenticated: false,
 }
 
@@ -18,6 +19,7 @@ export const authSlice = createSlice({
     setUser: (state: authType, action: PayloadAction<authType>) => {
       state.isAuthenticated = action.payload.isAuthenticated
       state.email = action.payload.email
+      state.accessToken = action.payload.accessToken
       state.userName = action.payload.userName
     },
   },
