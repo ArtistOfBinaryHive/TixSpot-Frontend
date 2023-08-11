@@ -76,3 +76,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* for better looking google login */
+iframe {
+  color-scheme: normal;
+}
