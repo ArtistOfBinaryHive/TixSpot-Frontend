@@ -27,6 +27,7 @@ import getUserDetails from "@/components/api-calls/user-details"
 import { Icons } from "@/components/icons"
 
 import ContinueWithGoogle from "../google"
+import updateUserAuthenticationStatus from "../update-user-auth-status"
 
 interface SigninFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 const formSchema = z.object({
@@ -60,15 +61,6 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
       setIsLoading(false)
     }, 1000)
 
-    // 3. Updates the global state of the user in redux
-    const updateUserAuthenticationStatus = (userDetails: authType) => {
-      try {
-        dispatch(setUser({ ...userDetails, isAuthenticated: true }))
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
     const call = async (values: z.infer<typeof formSchema>) => {
       const loginresponse = await login(values.email, values.password)
       console.log(loginresponse)
@@ -77,7 +69,12 @@ export function SigninForm({ className, ...props }: SigninFormProps) {
         const userDetails = await getUserDetails(loginresponse["access_token"])
         console.log(userDetails)
         // add userDetails to redux
-        updateUserAuthenticationStatus(userDetails)
+        updateUserAuthenticationStatus(dispatch, {
+          email: userDetails.email,
+          accessToken: "",
+          isAuthenticated: true,
+          userName: "",
+        })
       }
     }
     call(values)
