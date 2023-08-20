@@ -13,24 +13,36 @@ interface MainNavProps {
 
 export function ListLinks({ items }: MainNavProps) {
   return (
-    <div className="flex gap-6 md:gap-10">
-      <nav className="flex gap-6">
+    <div className="flex flex-col gap-6 md:gap-10">
+      <nav className="flex flex-col gap-6">
         {/* all nav item should be under NavigationMenuList component */}
         <NavigationMenu>
           <NavigationMenuList>
-            {/* NavLinkItem for standaalone links */}
-            <NavLinkItem title="Home" url="/" />
+            <div className="flex md:flex-row flex-col">
+              {/* NavLinkItem for standaalone links */}
+              <NavLinkItem title="Home" url="/" />
 
-            {/* NavMenuItem for links with menu */}
-            <NavMenuItem title="Event">
-              <EventNavMenu />
-            </NavMenuItem>
+              {/* NavMenuItem for links with menu */}
+              <div className="md:block hidden">
+                <NavMenuItem title="Event">
+                  <EventNavMenu />
+                </NavMenuItem>
+              </div>
+              <div className="md:hidden block">
+                <NavLinkItem title="Event" url="/events" />
+              </div>
 
-            <NavMenuItem title="Artists">
-              <ArtistsNavMenu />
-            </NavMenuItem>
+              <div className="md:block hidden">
+                <NavMenuItem title="Artists">
+                  <ArtistsNavMenu />
+                </NavMenuItem>
+              </div>
+              <div className="md:hidden block">
+                <NavLinkItem title="Artists" url="/artists" />
+              </div>
 
-            <NavLinkItem title="About" url="/" />
+              <NavLinkItem title="About" url="/" />
+            </div>
           </NavigationMenuList>
         </NavigationMenu>
       </nav>
