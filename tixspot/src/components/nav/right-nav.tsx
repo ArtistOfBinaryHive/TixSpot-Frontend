@@ -25,7 +25,7 @@ export function RightNav({ items }: MainNavProps) {
                     key={index}
                     href={item.href}
                     className={cn(
-                      "flex items-center text-sm font-medium text-muted-foreground",
+                      "flex items-center text-sm font-medium text-muted-foreground w-max",
                       item.customCSS,
                       item.disabled && "cursor-not-allowed opacity-80"
                     )}
